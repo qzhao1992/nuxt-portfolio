@@ -1,5 +1,14 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// nuxt.config.ts
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true }
+  // This enables the Nuxt 4 directory structure
+  future: {
+    compatibilityVersion: 4,
+  },
+  devtools: { enabled: true },
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
+
+  // This fixes the hydration error for the Headless UI menu
+  build: {
+    transpile: ['@headlessui/vue']
+  }
 })
