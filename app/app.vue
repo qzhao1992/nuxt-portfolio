@@ -7,3 +7,17 @@
     <SiteFooter />
   </div>
 </template>
+
+<script setup lang="ts">
+const config = useRuntimeConfig()
+
+// Run this check immediately
+if (process.server) {
+  console.log('🖥️ SERVER SIDE CHECK:')
+  console.log('   Token exists?', !!config.githubToken)
+  console.log('   Token length:', config.githubToken ? config.githubToken.length : 0)
+} else {
+  console.log('🌐 BROWSER SIDE CHECK:')
+  console.log('   Token exists?', !!config.githubToken)
+}
+</script>
