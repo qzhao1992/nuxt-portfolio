@@ -1,17 +1,7 @@
-<template>
-  <div class="flex flex-col min-h-screen">
-    <SiteHeader />
-    <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 grow items-start w-full">
-      <NuxtPage />
-    </main>
-    <SiteFooter />
-  </div>
-</template>
-
 <script setup lang="ts">
 const config = useRuntimeConfig()
 
-// Run this check immediately
+// Keep your debug logic here so it runs globally on app init
 if (process.server) {
   console.log('🖥️ SERVER SIDE CHECK:')
   console.log('   Token exists?', !!config.githubToken)
@@ -21,3 +11,9 @@ if (process.server) {
   console.log('   Token exists?', !!config.githubToken)
 }
 </script>
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>
