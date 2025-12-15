@@ -16,7 +16,7 @@ const navigation = [
   { name: 'Home', href: '/', current: route.name == 'index' },
   { name: 'Blog', href: '/blog', current: route.name.includes('blog') },
   { name: 'Projects', href: '/projects', current: route.name == 'projects' },
-  { name: 'Calendar', href: '/uses', current: route.name == 'uses' },
+  { name: 'Uses', href: '/uses', current: route.name == 'uses' },
 ]
 </script>
 

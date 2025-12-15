@@ -1,105 +1,285 @@
-<script setup></script>
+<script setup lang="ts">
+// 1. Fetch Blog Posts
+const { data: posts } = await useAsyncData('home-posts', () => {
+  return queryCollection('blog').order('date', 'DESC').limit(3).all()
+})
+
+// 2. FETCH REAL PROJECTS (This fixes the empty projects issue)
+// We limit to 3 for the homepage
+const { data: projects } = await useFetch('/api/projects')
+
+useHead({
+  title: 'Qing Zhao - Full Stack & Cross-Platform Engineer',
+  meta: [
+    {
+      name: 'description',
+      content: 'Senior Software Engineer specializing in Flutter, React, .NET, and Nuxt.',
+    },
+  ],
+})
+</script>
 
 <template>
-  <div class="antialiased text-gray-800 bg-white min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
-      <header class="mb-10 lg:mb-16 border-b pb-4">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">My Story</h1>
-      </header>
-
-      <!-- Layout: 1/3 Image Column | 2/3 Text Column -->
-      <div class="lg:grid lg:grid-cols-3 lg:gap-16">
-        <!-- Image Column (1/3) -->
-        <div class="lg:col-span-1 flex flex-col items-center lg:items-start mb-10 lg:mb-0">
-          <!-- Profile Picture -->
-          <img
-            src="~/assets/images/pic.png"
-            @error="handleImageError"
-            alt="Qing Zhao Professional Headshot"
-            class="w-64 h-64 rounded-full object-cover shadow-lg border-4 border-gray-100 transform hover:scale-105 transition duration-300"
-          />
-          <div class="text-center lg:text-left mt-8">
-            <h2 class="text-3xl font-bold text-gray-900">Qing Zhao</h2>
-            <p class="text-xl text-indigo-600 font-semibold mt-2">Senir Software Engineer</p>
-          </div>
-        </div>
-
-        <!-- Text Content Column (2/3) -->
-        <div class="lg:col-span-2 text-gray-700 space-y-10">
-          <p class="text-xl leading-relaxed">
-            Hello! I’m Qing, and I thrive at the intersection of focused discipline and relentless
-            curiosity. While my professional life is centered on
-            <strong>Senior Software Engineer</strong>, my daily life is built on principles that
-            directly fuel my success in technology.
+  <div
+    class="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden"
+  >
+    <section class="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1">
+          <p class="text-indigo-600 dark:text-indigo-400 font-bold tracking-wide uppercase mb-4">
+            Senior Software Engineer
+          </p>
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight"
+          >
+            Engineering
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400"
+              >Mobile</span
+            >,
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400"
+              >Web</span
+            >, &
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-purple-500"
+              >Backend</span
+            >
+            solutions.
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+            I'm Qing Zhao. A polyglot developer capable of building pixel-perfect Flutter apps,
+            robust .NET APIs, and SEO-optimized Nuxt frontends.
           </p>
 
-          <!-- The Foundation of Discipline -->
-          <div>
-            <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">
-              The Foundation of Discipline
-            </h3>
-
-            <p class="mb-4 leading-relaxed">
-              Whether I'm writing clean code or engaging in physical activity, discipline is my
-              cornerstone. My commitment to <b>Taekwondo</b> and <b>weightlifting</b> isn't just
-              about physical strength; it’s about persistence, incremental gains, and the mental
-              stamina required to overcome difficult challenges qualities I apply directly to
-              tackling complex technical problems.
-            </p>
-
-            <p class="leading-relaxed">
-              I also dedicate time every Sunday to serving as a
-              <b>buddy for a special needs child at church</b>. This role teaches empathy, patience,
-              adaptability, and the profound value of consistent, focused attention all crucial
-              skills for clear communication and collaboration on any development team.
-            </p>
+          <div class="flex flex-wrap gap-4">
+            <NuxtLink
+              to="#featured-work"
+              class="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-lg hover:opacity-90 transition"
+            >
+              View My Work
+            </NuxtLink>
+            <NuxtLink
+              to="/about"
+              class="px-8 py-4 border border-gray-300 dark:border-gray-700 font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+            >
+              My Story
+            </NuxtLink>
           </div>
+        </div>
 
-          <!-- Relentless Curiosity -->
-          <div>
-            <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">
-              Relentless Curiosity
-            </h3>
-
-            <p class="mb-4 leading-relaxed">
-              In a field that changes daily, staying current is non-negotiable. I actively engage in
-              <b>self-directed learning via YouTube</b> to keep pace with the latest technologies,
-              languages, and strategic frameworks. This continuous desire to update my knowledge
-              informs my approach to development and guides my strategies in the
-              <b>stock market</b>, where successful trading depends on informed, data-driven
-              decisions.
-            </p>
+        <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-teal-500 rounded-2xl rotate-6 opacity-20 blur-2xl"
+            ></div>
+            <img
+              src="~/assets/images/pic.png"
+              alt="Qing Zhao"
+              class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl shadow-2xl border-4 border-white dark:border-gray-800 rotate-3 hover:rotate-0 transition duration-500 ease-in-out z-10"
+            />
           </div>
-
-          <!-- Balance and Grounding -->
-          <div>
-            <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">
-              Balance and Grounding
-            </h3>
-
-            <p class="mb-4 leading-relaxed">
-              To sustain a high-paced, high-focus career, balance is essential. My weekends are
-              deliberately grounded in maintenance: taking care of
-              <b>housework, laundry, and cleaning</b>. Occasionally, I visit a
-              <b>yoga class for stretching</b> to maintain posture and mental clarity. This
-              commitment to routine and physical well-being ensures that I bring a fresh, focused
-              perspective to my professional challenges every week.
-            </p>
-          </div>
-
-          <!-- Conclusion -->
-          <footer class="pt-8 border-t-2 border-gray-200 mt-10">
-            <p class="text-xl font-semibold text-gray-800 leading-relaxed">
-              I believe that a committed life outside of work fueled by curiosity, discipline, and
-              service, makes for a more resilient and innovative professional. I look forward to
-              building something great with you.
-            </p>
-          </footer>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="border-y border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+      <div class="max-w-7xl mx-auto px-6 py-12">
+        <p class="text-center text-sm font-semibold text-gray-500 uppercase tracking-widest mb-8">
+          Technical Arsenal
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-8 md:gap-12 opacity-90">
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:flutter"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition"
+              >Flutter</span
+            >
+          </div>
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:react"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition"
+              >R.Native</span
+            >
+          </div>
+
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:nuxt-icon"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition">Nuxt</span>
+          </div>
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:angular-icon"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition"
+              >Angular</span
+            >
+          </div>
+
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:c-sharp"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition">C#</span>
+          </div>
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:dotnet"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition">.NET</span>
+          </div>
+          <div class="group flex flex-col items-center gap-2">
+            <Icon
+              name="logos:nodejs-icon"
+              class="h-10 w-10 md:h-12 md:w-12 filter grayscale group-hover:grayscale-0 transition"
+            />
+            <span class="text-xs font-mono opacity-0 group-hover:opacity-100 transition">Node</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="featured-work" class="max-w-7xl mx-auto px-6 py-24">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Featured Work</h2>
+          <p class="text-gray-500 dark:text-gray-400">
+            A mix of cross-platform apps and full-stack web solutions.
+          </p>
+        </div>
+        <NuxtLink
+          to="/projects"
+          class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+        >
+          View all projects &rarr;
+        </NuxtLink>
+      </div>
+
+      <div v-if="projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-for="project in projects.slice(0, 3)"
+          :key="project.id"
+          class="group bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg transition flex flex-col h-full"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-500">
+              <Icon name="ion:code-slash" class="w-6 h-6" />
+            </div>
+            <span class="text-xs font-mono text-gray-500">GitHub</span>
+          </div>
+
+          <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600 transition-colors">
+            <a :href="project.url" target="_blank">{{ project.name }}</a>
+          </h3>
+
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
+            {{ project.description || 'No description available.' }}
+          </p>
+
+          <div
+            class="flex items-center gap-4 text-xs text-gray-500 mt-auto pt-4 border-t border-gray-100 dark:border-gray-800"
+          >
+            <span class="flex items-center gap-1">
+              <Icon name="heroicons:star" class="w-4 h-4 text-yellow-500" />
+              {{ project.stargazers.totalCount }}
+            </span>
+            <span class="flex items-center gap-1">
+              <Icon name="octicon:git-branch-16" class="w-4 h-4" />
+              {{ project.forks.totalCount }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div v-else class="text-center py-12 text-gray-500">Loading projects...</div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-6 py-24 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">Engineered with Discipline & Heart</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-12 leading-relaxed">
+        My code reflects my life: grounded in the discipline of martial arts and the empathy of
+        community service.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-8 text-left">
+        <div
+          class="bg-gray-50 dark:bg-gray-900 p-8 rounded-2xl border border-gray-100 dark:border-gray-800"
+        >
+          <div
+            class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-lg text-indigo-600 inline-block mb-4"
+          >
+            <Icon name="ph:martial-arts-fill" class="w-8 h-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Persistence</h3>
+          <p class="text-gray-600 dark:text-gray-400">
+            Black belt discipline applied to code. I don't just fix bugs; I master the system.
+          </p>
+        </div>
+
+        <div
+          class="bg-gray-50 dark:bg-gray-900 p-8 rounded-2xl border border-gray-100 dark:border-gray-800"
+        >
+          <div
+            class="bg-teal-100 dark:bg-teal-900/30 p-3 rounded-lg text-teal-600 inline-block mb-4"
+          >
+            <Icon name="ph:heart-fill" class="w-8 h-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Empathy</h3>
+          <p class="text-gray-600 dark:text-gray-400">
+            Understanding the human on the other side of the screen is the most important part of
+            engineering.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gray-50 dark:bg-gray-900/30 border-t border-gray-100 dark:border-gray-800">
+      <div class="max-w-7xl mx-auto px-6 py-24">
+        <div class="flex justify-between items-end mb-12">
+          <h2 class="text-3xl font-bold">Latest Writings</h2>
+          <NuxtLink
+            to="/blog"
+            class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+          >
+            Read blog &rarr;
+          </NuxtLink>
+        </div>
+
+        <div v-if="posts && posts.length" class="grid md:grid-cols-3 gap-8">
+          <NuxtLink v-for="post in posts" :key="post.path" :to="post.path" class="group block">
+            <article
+              class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition h-full"
+            >
+              <time class="text-xs text-indigo-500 font-semibold mb-3 block">
+                {{ new Date(post.date).toLocaleDateString() }}
+              </time>
+              <h3
+                class="text-xl font-bold mb-3 group-hover:text-indigo-600 transition-colors line-clamp-2"
+              >
+                {{ post.title }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                {{ post.description }}
+              </p>
+            </article>
+          </NuxtLink>
+        </div>
+
+        <div v-else class="text-center py-12 text-gray-500">
+          <p>No blog posts found yet.</p>
+        </div>
+      </div>
+    </section>
   </div>
-  <section>
-    <h2 class="text-3xl font-bold mt-8">Latest Blog Posts</h2>
-  </section>
 </template>
